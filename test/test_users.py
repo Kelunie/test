@@ -33,3 +33,5 @@ def test_get_subjects_como_admin(mock_users_service):
     
     # Limpiamos las dependencias sobrescritas para no afectar otros tests
     app.dependency_overrides.clear()
+
+    # new push
