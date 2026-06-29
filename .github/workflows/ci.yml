@@ -9,13 +9,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: MONGODB_URI # <-- NOMBRE DEL ENTORNO QUE CREASTE EN GITHUB
 
     steps:
-    # Actualizado a v6 para soporte nativo de Node 24
     - name: Copiar repositorio
       uses: actions/checkout@v6
 
-    # Actualizado a v6 para soporte nativo de Node 24
     - name: Configurar Python
       uses: actions/setup-python@v6
       with:
@@ -27,5 +26,8 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
     - name: Ejecutar pruebas unitarias
+      env:
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
       run: |
         python -m pytest
