@@ -1,29 +1,29 @@
 name: FastAPI CI
 
 on:
-    push:
-        branches: [ "main, master" ]
-    pull_request:
-        branches: [ "main" ]
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-latest
 
-        steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
+    steps:
+    - name: Copiar repositorio
+      uses: actions/checkout@v4
 
-        - name: Set up Python 3.10
-          uses: actions/setup-python@v4
-          with:
-            python-version: 3.10
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
 
-        - name: Install dependencies
-          run: |
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt
+    - name: Instalar dependencias
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-        - name: Test with pytest
-          run: |
-            pytest
+    - name: Ejecutar pruebas unitarias
+      run: |
+        python -m pytest
